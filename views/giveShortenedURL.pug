@@ -5,11 +5,11 @@ html
     
   body
     .container
-    h3#register_error= error
-    form.form-horizontal(_lpchecked='1', action='/getURL', method='POST')
-      fieldset
-        legend ittyurl - an obvious tinyurl clone:
-            .container
-                p= encodedURL
-  
+        h3#register_error= error
+        form.form-horizontal(_lpchecked='1', action='/getURL', method='POST')
+        fieldset
+            legend ittyurl - an obvious tinyurl clone:
+                .container
+                    p= encodedURL
     
+        
