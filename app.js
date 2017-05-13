@@ -75,8 +75,16 @@ app.post('/getURL', (req, res) =>{
     if (results.length == 0){
       console.log("no url in the database")
       encodedURL = "NOT FOUND"
+
+      var sqlInsertNewURL = "INSERT INTO `urls` SET `fullURL` = ?"
+      connection.query(sqlInsertNewURL, [url], function(error, results, fields){
+      if (error) throw error
+
       console.log(encodedURL)
-      res.render('giveShortenedURL', {newURL: encodedURL})
+      // res.render('giveShortenedURL', {newURL: encodedURL})
+    
+      })
+
     }
     else{
       console.log("url in db")
