@@ -18,9 +18,9 @@ app.listen(app.get('port'), function(){
   console.log('tiny-url clone running on port', app.get('port'))
 })
 
-//app.get("/", (req, res) =>{
-//  res.render('index')
-//})
+app.get("/", (req, res) =>{
+  res.send('ittyurl . herokuapp . com')
+})
 
 app.get('/tiny/:tagId', function(req, res){
   res.send("tagId is set to" + req.params.tagId)
