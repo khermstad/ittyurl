@@ -10,5 +10,11 @@ html
         fieldset
             legend ittyurl - an obvious tinyurl clone:
         .container
-            p= encodedURL
+            h5= "Here is your shortened URL:"
+            h4= encodedURL
+            h4
+              a(href="http://"+ encodedURL) Link
+
+            p
+              a(href="/") Back to Home.  
 
