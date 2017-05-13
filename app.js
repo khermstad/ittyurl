@@ -95,6 +95,7 @@ app.post('/getURL', (req, res) =>{
       })
 
     }
+    // TODO: handle urls that already exist in db
     else{
       console.log("url in db")
       console.log(results[0].index)
