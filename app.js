@@ -19,7 +19,7 @@ app.listen(app.get('port'), function(){
 })
 
 app.get("/", (req, res) =>{
-  res.send('ittyurl . herokuapp . com')
+  res.render('index')
 })
 
 app.get('/tiny/:tagId', function(req, res){
