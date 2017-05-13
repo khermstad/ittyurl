@@ -23,6 +23,6 @@ app.get("/", (req, res) =>{
 })
 
 app.get('/tiny/:tagId', function(req, res){
-  res.send("tagId is set to" + req.params.tagId)
+  res.send("tagId is set to " + req.params.tagId)
 })
 
