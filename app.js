@@ -26,3 +26,6 @@ app.get('/tiny/:tagId', function(req, res){
   res.send("tagId is set to " + req.params.tagId)
 })
 
+app.post('/getURL', (req, res) =>{
+  res.redirect("http://www.google.com")
+})
