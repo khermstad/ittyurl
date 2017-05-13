@@ -55,7 +55,18 @@ app.get("/", (req, res) =>{
 })
 
 app.get('/tiny/:tagId', function(req, res){
-  res.send("tagId is set to " + req.params.tagId)
+
+  var decodedURL = base62.decode(req.params.tagId)
+
+  var sqlSelectFromIndex = "SELECT * from `urls` where `index` = ?"
+  connection.query(sqlSelectFromIndex, [decodedURL], function(error, results, fields){
+    if (error) throw error
+
+
+    res.redirect(results[0].fullURL)
+  }
+
+)
 })
 
 app.post('/getURL', (req, res) =>{
