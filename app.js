@@ -59,6 +59,28 @@ app.get('/tiny/:tagId', function(req, res){
 })
 
 app.post('/getURL', (req, res) =>{
-  console.log(req.body.fullURL)
-  res.redirect("http://www.google.com")
+  
+  var url = req.body.fullURL
+
+  if (url.substring(0, 7) != "http://"){
+    if (url.substring(0, 8) != "https://"){
+      url = "http://"+url
+    }
+  }
+  
+  var sqlIndexStatement = "SELECT * from `urls` WHERE `fullURL`= ?"
+  connection.query(sqlIndexStatement, [url], function(error, results, fields){
+    if (error) throw error
+
+    if (results.length == 0){
+      console.log("no url in the database")
+    }
+    else{
+      console.log("url in db")
+    }
+  })
+
+  console.log(url)
+
+  res.redirect(url)
 })
