@@ -61,7 +61,7 @@ app.get('/tiny/:tagId', function(req, res){
 app.post('/getURL', (req, res) =>{
   
   var url = req.body.fullURL
-
+  var encodedURL;
   if (url.substring(0, 7) != "http://"){
     if (url.substring(0, 8) != "https://"){
       url = "http://"+url
@@ -74,13 +74,17 @@ app.post('/getURL', (req, res) =>{
 
     if (results.length == 0){
       console.log("no url in the database")
+      encodedURL = "NOT FOUND"
+      console.log(encodedURL)
+      res.render('giveShortenedURL', {newURL: encodedURL})
     }
     else{
       console.log("url in db")
+      console.log(results[0].index)
+      encodedURL = base62.encode(results[0].index)
+      console.log(encodedURL)
+      res.render('giveShortenedURL', {newURL: encodedURL})
     }
   })
 
-  console.log(url)
-
-  res.redirect(url)
 })
