@@ -78,11 +78,20 @@ app.post('/getURL', (req, res) =>{
 
       var sqlInsertNewURL = "INSERT INTO `urls` SET `fullURL` = ?"
       connection.query(sqlInsertNewURL, [url], function(error, results, fields){
-      if (error) throw error
+        if (error) throw error
 
-      console.log(encodedURL)
-      // res.render('giveShortenedURL', {newURL: encodedURL})
-    
+
+        connection.query(sqlIndexStatement, [url], function(error, results, fields){
+          if(error) throw error 
+
+          var index = results[0].index
+          var encodedIndex = base62.encode(results[0].index)
+          
+          console.log("index: " + index)
+          console.log("encodedIndex: " + encodedIndex)
+
+          res.render('giveShortenedURL', {newURL: encodedIndex})
+        })
       })
 
     }
