@@ -62,11 +62,13 @@ app.get('/tiny/:tagId', function(req, res){
   connection.query(sqlSelectFromIndex, [decodedURL], function(error, results, fields){
     if (error) throw error
 
-
-    res.redirect(results[0].fullURL)
-  }
-
-)
+      if (results.length == 0){
+        res.render('notfound')
+      }
+      else{
+        res.redirect(results[0].fullURL)
+      }
+  })
 })
 
 app.post('/getURL', (req, res) =>{

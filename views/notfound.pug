@@ -1,0 +1,18 @@
+html
+  head
+    include includes/head.pug
+    
+  body
+    .container
+        h3#register_error= error
+        form.form-horizontal(_lpchecked='1', action='/getURL', method='POST')
+        fieldset
+            legend ittyurl - an obvious tinyurl clone:
+        .container
+            h5= "Sorry, that shortened URL does not exist in the database. Please Try Again."
+
+            p
+              a(href="/") Back to Home.
+            
+            include includes/footer.pug  
+
