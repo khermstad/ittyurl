@@ -15,10 +15,10 @@ app.use(express.static('public'))
 app.set('port', (process.env.PORT || 5001))
 
 const db_config = {
-  host: '107.180.44.152',
-  user: 'jkhermstad',
-  password: 'jkhermstad',
-  database: 'jkh_ittyurl'
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DB
 }
 
 var connection
