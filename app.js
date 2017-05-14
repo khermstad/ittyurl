@@ -13,7 +13,7 @@ app.use(express.static('public'))
 
 app.set('port', (process.env.PORT || 5001))
 
-// db credentals stored in environment variables passed via start.sh script in project folder 
+// database credentals stored in environment variables passed via start.sh script in project folder (not hosted on github, duh!)
 // (on heroku in Config Vars)
 const db_config = {
   host: process.env.HOST,
@@ -57,6 +57,7 @@ app.get("/", (req, res) =>{
   res.render('index')
 })
 
+// handles the access of shortened urls
 app.get('/tiny/:tagId', function(req, res){
   var decodedURL = base62.decode(req.params.tagId)
   var sqlSelectFromIndex = "SELECT * from `urls` where `index` = ?"
@@ -89,7 +90,7 @@ app.post('/getURL', (req, res) =>{
   connection.query(sqlIndexStatement, [url], function(error, results, fields){
     if (error) throw error
 
-    // if URL not found, insert into DB and return new shortened URL, else returned encoded index url
+    // if URL not found, insert into DB and return new shortened URL, else return encoded index url
     if (results.length == 0){
       encodedURL = "NOT FOUND"
 
@@ -100,21 +101,17 @@ app.post('/getURL', (req, res) =>{
 
         connection.query(sqlIndexStatement, [url], function(error, results, fields){
           if(error) throw error 
-
-          var index = results[0].index
-          var encodedIndex = base62.encode(results[0].index)
           
-          console.log("index: " + index)
-          console.log("encodedIndex: " + encodedIndex)
-
+          // get index from results
+          var index = results[0].index
+          // encode index into base62
+          var encodedIndex = base62.encode(results[0].index)
           res.render('giveShortenedURL', {newURL: encodedIndex})
         })
       })
     } else{ 
-      console.log("url in db")
-      console.log(results[0].index)
+      // URL exists in DB, so return index encoded and pass to render 'giveShortenedURL'
       encodedURL = base62.encode(results[0].index)
-      console.log(encodedURL)
       res.render('giveShortenedURL', {newURL: encodedURL})
       }
   })
