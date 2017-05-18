@@ -48,7 +48,6 @@ function handleDisconnect() {
 handleDisconnect();
 
 // REST api
-
 app.listen(app.get('port'), function(){
   console.log('tiny-url clone running on port', app.get('port'))
 })
@@ -57,7 +56,7 @@ app.get("/", (req, res) =>{
   res.render('index')
 })
 
-// handles the access of shortened urls
+// handles the access of shortened urls via /tiny/<shortened url>
 app.get('/tiny/:tagId', function(req, res){
   var decodedURL = base62.decode(req.params.tagId)
   var sqlSelectFromIndex = "SELECT * from `urls` where `index` = ?"
@@ -110,6 +109,14 @@ app.post('/getURL', (req, res) =>{
         })
       })
     } else{ 
+      // update dateLastAccessed to now
+
+      var SQLupdateDateLastAccessed = "UPDATE urls set `dateLastAccessed` = NOW() where `fullURL` = ?"
+      connection.query(SQLupdateDateLastAccessed, [results[0].fullURL], function(error, results, fields){
+          if (error) throw error 
+
+          
+      })
       // URL exists in DB, so return index encoded and pass to render 'giveShortenedURL'
       encodedURL = base62.encode(results[0].index)
       res.render('giveShortenedURL', {newURL: encodedURL})
